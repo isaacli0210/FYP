@@ -16,19 +16,22 @@ soup = BeautifulSoup(thePage, "html.parser")
 
 
 """ For Race General Information Table"""
-table = soup.findAll('table', {'class': 'tableBorder0 font13'})
-for tRows in table[0].findAll('tr'):
-    for tDatas in tRows.findAll('td'):
+table = soup.find_all('table', {'class': 'tableBorder0 font13'})
+for tRows in table[0].find_all('tr'):
+    for tDatas in tRows.find_all('td'):
         print(tDatas.text)
 
 
 """ For Race Result Table"""
-table = soup.findAll('table', {'class': 'tableBorder trBgBlue tdAlignC number12 draggable'})
-tBody = soup.find('tbody')
+table = soup.find_all('table', {'class': 'tableBorder trBgBlue tdAlignC number12 draggable'})
+tBody = table[0].find('tbody')
 savedRecord = ""
-for tRows in tBody.findAll('tr'):
+for tRows in tBody.find_all('tr'):
+    
     record = ""
-    for tDatas in tRows.findAll('td'):
+    for tDatas in tRows.find_all('td'):
+        if tDatas.find('table'):
+            continue
         record = record + "," + tDatas.text
     savedRecord = savedRecord + "\n" + record[1:]
 print(savedRecord)
