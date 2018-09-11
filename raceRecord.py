@@ -23,16 +23,24 @@ for tRows in table[0].find_all('tr'):
 
 
 """ For Race Result Table"""
+header = "place, horse_no, horse_name, horse_id, jockey, trainer, actual_weight, declared_weight, draw, length_behind_winner, running_position_1, running_position_2, running_position_3, finish_time, win_odds"
 table = soup.find_all('table', {'class': 'tableBorder trBgBlue tdAlignC number12 draggable'})
 tBody = table[0].find('tbody')
 savedRecord = ""
 for tRows in tBody.find_all('tr'):
-    
+    if len(tRows.find_parents('table')) == 2:   # There is a nested table to store the Running Position result.
+        continue
     record = ""
+    counter = 0   # Use to split the horse name and id.
     for tDatas in tRows.find_all('td'):
+        counter += 1
         if tDatas.find('table'):
             continue
-        record = record + "," + tDatas.text
+        if counter == 3:   # Use to split the horse name and id.
+            data = tDatas.text.split("(")
+            record = record + "," + data[0] + "," + data[1][0:4]
+        else:
+            record = record + "," + tDatas.text
     savedRecord = savedRecord + "\n" + record[1:]
 print(savedRecord)
 
