@@ -1,16 +1,15 @@
-testString = ["Master(A296)", "Pater(B346)", "Cat(C543)"]
-stringList = ["1", "2", "3"]
+import urllib.request
+from bs4 import BeautifulSoup
 
-myString = "Hello, World"
-for data in stringList:
-    myString = myString + ", " + data
-print(myString)
+theURL = "http://racing.hkjc.com/racing/Info/Meeting/Results/English/Local/20080412/ST/9"
 
-"""
-id = ""
-for data in testString:
-    datas = data.split("(")
-    name = datas[0]
-    id = datas[1][0:4]
-    print(id)
-"""
+while(True):
+    thePage = urllib.request.urlopen(theURL)
+    soup = BeautifulSoup(thePage, "html.parser")
+
+    table = soup.find('table', {'class': 'tableBorder trBgBlue tdAlignC number12 draggable'})
+    # Wait for page fully loaded.
+    if table != None:
+        tBody = table.find('tbody')
+        print(tBody)
+        break
