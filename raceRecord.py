@@ -13,7 +13,7 @@ header = "place, horse_no, horse_name, horse_id, jockey, trainer, actual_weight,
 file = open(os.path.expanduser("RaceResult.csv"), "wb")
 file.write(bytes(header, encoding="ascii", errors='ignore'))
 
-for i in range(len(races)):
+for i in range(12):
     #theURL = "http://racing.hkjc.com/racing/Info/Meeting/Results/English/Local/20180905/HV/2"
     # Find the div (class = raceNum clearfix) -> table -> a.value
     theURL = "http://racing.hkjc.com/racing/Info/Meeting/Results/English/Local/20080412/ST/" + races[i]
@@ -30,8 +30,12 @@ for i in range(len(races)):
         """
 
         """ For Race Result Table"""
+        errorDiv = soup.find('div', {'id': 'divErrorMsg'})
+
         table = soup.find('table', {'class': 'tableBorder trBgBlue tdAlignC number12 draggable'})
-        if table is not None and i < 13:
+        if errorDiv is not None:
+            break
+        elif table is not None:
             tBody = table.find('tbody')
             savedRecord = ""
             for tRows in tBody.find_all('tr'):
@@ -40,7 +44,7 @@ for i in range(len(races)):
                 record = ""
                 runningPositionTable = ["NA"] * 6
                 column = 0   # Use to split the horse name and id.
-                isWV = False   # Use to check the row has WV(Withdrawn-on Veterinary Ground) or not.
+                # isWV = False   # Use to check the row has WV(Withdrawn-on Veterinary Ground) or not.
 
                 for tDatas in tRows.find_all('td'):
                     column += 1
@@ -51,13 +55,15 @@ for i in range(len(races)):
                             i += 1
                         continue
 
-                    if column == 1 and tDatas.text == "WV":
-                        isWV = True
-                        record = record + "," + tDatas.text
-                    elif column == 10 and isWV:   # Skip the Running Position if it is WV.
-                        isWV = False
+                    # if column == 1 and tDatas.text == "WV":
+                    #     isWV = True
+                    #     record = record + "," + tDatas.text
+                    # elif column == 10 and isWV:   # Skip the Running Position if it is WV.
+                    #     isWV = False
+                    #     continue
+                    if column == 10 and tDatas.text == "---":
                         continue
-                    elif column == 10 and tDatas.text == "---":
+                    elif column == 10 and tDatas.text == "-":
                         continue
                     elif column == 3:   # Use to split the horse name and id.
                         data = tDatas.text.split("(")
@@ -77,8 +83,3 @@ for i in range(len(races)):
             break
 
 file.close()
-"""
-appendFile = open('RaceResult.csv', 'a')
-appendFile.write(savedRecord)
-appendFile.close()
-"""
