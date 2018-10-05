@@ -10,7 +10,7 @@ file = open("RaceDateST.csv", "a")
 
 
 for day in range(len(days)):
-    theURL = "http://racing.hkjc.com/racing/Info/Meeting/Results/English/Local/201201" + days[day] + "/ST/1" + "\n"
+    theURL = "http://racing.hkjc.com/racing/Info/Meeting/Results/English/Local/201807" + days[day] + "/ST/1" + "\n"
 
     while(True):
         thePage = urllib.request.urlopen(theURL)
@@ -25,6 +25,9 @@ for day in range(len(days)):
             if table is not None:
                 file.write(theURL)
                 print(theURL)
+                break
+            else:
+                print("Table = None AND errrorDiv = None")
                 break
 
 file.close()

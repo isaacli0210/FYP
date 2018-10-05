@@ -11,7 +11,7 @@ file = open("RaceDateHV.csv", "a")
 
 
 for day in range(len(days)):
-    theURL = "http://racing.hkjc.com/racing/Info/Meeting/Results/English/Local/201201" + days[day] + "/HV/1" + "\n"
+    theURL = "http://racing.hkjc.com/racing/Info/Meeting/Results/English/Local/201807" + days[day] + "/HV/1" + "\n"
 
     while(True):
         thePage = urllib.request.urlopen(theURL)
@@ -28,6 +28,7 @@ for day in range(len(days)):
                 print(theURL)
                 break
             else:
+                print("Table = None AND errrorDiv = None")
                 break
 
 file.close()
