@@ -3,26 +3,27 @@ from bs4 import BeautifulSoup
 
 """ Define URL """
 races = [str(x) for x in range(13)[1:]]
-header = "place, horse_no, horse_name, horse_id, jockey, trainer, actual_weight, declared_weight, draw, length_behind_winner, finish_time, win_odds, running_position_1, running_position_2, running_position_3, running_position_4, running_position_5, running_position_6" + "\n"
+header = "date, race_no, place, horse_no, horse_name, horse_id, jockey, trainer, actual_weight, declared_weight, draw, length_behind_winner, finish_time, win_odds, running_position_1, running_position_2, running_position_3, running_position_4, running_position_5, running_position_6" + "\n"
 
-file = open("textRaceResult.csv", "a")
-dateFile = open("OnlyDateST.txt", "r")
+#file = open("textRaceResult.csv", "a")
+dateFile = open("OnlyDateST_2008_1.txt", "r")
 
-file.write(header)
+#file.write(header)
 for date in dateFile.read().splitlines():
-    for i in range(12):
-        theURL = "http://racing.hkjc.com/racing/Info/Meeting/Results/English/Local/" + date + "/ST/" + races[i]
-        print(date + "..." + str(i))
+    for raceNum in range(12):
+        theURL = "http://racing.hkjc.com/racing/Info/Meeting/Results/English/Local/" + date + "/ST/" + races[raceNum]
+        print(date + "..." + str(raceNum))
         while(True):
             thePage = urllib.request.urlopen(theURL)
             soup = BeautifulSoup(thePage, "html.parser")
 
-            """ For Race General Information Table
-            table = soup.find_all('table', {'class': 'tableBorder0 font13'})
-            for tRows in table[0].find_all('tr'):
-                for tDatas in tRows.find_all('td'):
-                    print(tDatas.text)
-            """
+            # # For Race General Information Table
+            # table = soup.find('table', {'class': 'tableBorder0 font13'})
+            # if table is not None:
+            #     for tRows in table.find_all('tr'):
+            #         for tDatas in tRows.find_all('td'):
+            #             print(tDatas.text)
+            #     break
 
             """ For Race Result Table"""
             errorDiv = soup.find('div', {'id': 'divErrorMsg'})
@@ -65,11 +66,11 @@ for date in dateFile.read().splitlines():
                     for runningPositionData in runningPositionTable:   # Running Position Table.
                         record = record + "," + runningPositionData
 
-                    savedRecord = savedRecord + "\n" + record[1:]
+                    savedRecord = savedRecord + "\n" + date + "," + str(raceNum) + "," + record[1:]
                 print(savedRecord)
 
-                file.write(savedRecord)
+                #file.write(savedRecord)
                 break
 
 dateFile.close()
-file.close()
+#file.close()
