@@ -3,24 +3,27 @@ import os
 from bs4 import BeautifulSoup
 
 """ Define URL """
-years = [str(x) for x in range(2008, 2019)]
-months = ["{:02d}".format(x) for x in range(13)[1:]]
-days = ["{:02d}".format(x) for x in range(32)[1:]]
-venues = ["ST", "HV"]
+#years = [str(x) for x in range(2008, 2019)]
+#months = ["{:02d}".format(x) for x in range(13)[1:]]
+#days = ["{:02d}".format(x) for x in range(32)[1:]]
+#venues = ["ST", "HV"]
 races = [str(x) for x in range(13)[1:]]
 header = "place, horse_no, horse_name, horse_id, jockey, trainer, actual_weight, declared_weight, draw, length_behind_winner, finish_time, win_odds, running_position_1, running_position_2, running_position_3, running_position_4, running_position_5, running_position_6" + "\n"
 
-file = open(os.path.expanduser("RaceResult.csv"), "wb")
-file.write(bytes(header, encoding="ascii", errors='ignore'))
+file = open("RaceResult.csv", "a")
+#file = open(os.path.expanduser("RaceResult.csv"), "wb")
+#file.write(bytes(header, encoding="ascii", errors='ignore'))
+#file.write(header)
 
 for i in range(12):
-    #theURL = "http://racing.hkjc.com/racing/Info/Meeting/Results/English/Local/20180905/HV/2"
+    # theURL = "http://racing.hkjc.com/racing/Info/Meeting/Results/English/Local/20180905/HV/2"
     # Find the div (class = raceNum clearfix) -> table -> a.value
-    theURL = "http://racing.hkjc.com/racing/Info/Meeting/Results/English/Local/20080412/ST/" + races[i]
+    # theURL = "http://racing.hkjc.com/racing/Info/Meeting/Results/English/Local/20080412/ST/" + races[i]
+    theURL = "http://racing.hkjc.com/racing/Info/Meeting/Results/English/Local/20080217/ST/" + races[i]
+    print(i)
     while(True):
         thePage = urllib.request.urlopen(theURL)
         soup = BeautifulSoup(thePage, "html.parser")
-
 
         """ For Race General Information Table
         table = soup.find_all('table', {'class': 'tableBorder0 font13'})
@@ -79,7 +82,8 @@ for i in range(12):
                 savedRecord = savedRecord + "\n" + record[1:]
             print(savedRecord)
 
-            file.write(bytes(savedRecord, encoding="ascii", errors='ignore'))
+            #file.write(bytes(savedRecord, encoding="ascii", errors='ignore'))
+            file.write(savedRecord)
             break
 
 file.close()

@@ -10,7 +10,7 @@ file = open("RaceDateST.csv", "a")
 
 
 for day in range(len(days)):
-    theURL = "http://racing.hkjc.com/racing/Info/Meeting/Results/English/Local/201807" + days[day] + "/ST/1" + "\n"
+    theURL = "http://racing.hkjc.com/racing/Info/Meeting/Results/English/Local/201809" + days[day] + "/ST/1" + "\n"
 
     while(True):
         thePage = urllib.request.urlopen(theURL)

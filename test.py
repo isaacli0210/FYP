@@ -30,3 +30,12 @@
 #     #         counter += 1
 #     #         print(counter)
 #     #     break
+
+file = open("OnlyDateST.txt", "r")
+races = [str(x) for x in range(13)[1:]]
+for date in file.read().splitlines():
+    for i in range(12):
+        theURL = "http://racing.hkjc.com/racing/Info/Meeting/Results/English/Local/" + date + "/ST/" + races[i]
+        print(theURL)
+
+file.close()
