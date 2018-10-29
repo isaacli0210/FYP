@@ -4,14 +4,14 @@ from bs4 import BeautifulSoup
 races = [str(x) for x in range(13)[1:]]
 header = "race_id, date, race_no, class, distance, rating_upper, rating_lower, condition, course_type, track" + "\n"
 
-file = open("RaceInfoST.csv", "a")
-dateFile = open("raceDate/OnlyDateST_2018_2.txt", "r")
+file = open("RaceInfoHV.csv", "a")
+dateFile = open("raceDate/OnlyDateHV_2018_2.txt", "r")
 
 #file.write(header)
 for date in dateFile.read().splitlines():
     for raceNum in range(12):
 
-        theURL = "http://racing.hkjc.com/racing/Info/Meeting/Results/English/Local/" + date + "/ST/" + races[raceNum]
+        theURL = "http://racing.hkjc.com/racing/Info/Meeting/Results/English/Local/" + date + "/HV/" + races[raceNum]
         raceID = date + "{:02d}".format(raceNum + 1)
         print(date + "..." + str(raceNum + 1))
 
