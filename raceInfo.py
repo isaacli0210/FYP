@@ -4,8 +4,8 @@ from bs4 import BeautifulSoup
 races = [str(x) for x in range(13)[1:]]
 header = "race_id, date, race_no, class, distance, rating_upper, rating_lower, condition, course_type, track" + "\n"
 
-#file = open("RaceInfoST.csv", "a")
-dateFile = open("raceDate/OnlyDateST_2014_1.txt", "r")
+file = open("RaceInfoST.csv", "a")
+dateFile = open("raceDate/OnlyDateST_2018_2.txt", "r")
 
 #file.write(header)
 for date in dateFile.read().splitlines():
@@ -62,7 +62,7 @@ for date in dateFile.read().splitlines():
                     track = course[1].lstrip().split("\"")[1]
 
                 saveRecord = saveRecord + "\n" + raceID + "," + date + "," + str(raceNum + 1) + "," + raceClass + "," + distance + "," + rateUpper + "," + rateLower + "," + condition + "," + courseType + "," + track
-                #file.write(saveRecord)
+                file.write(saveRecord)
                 print(saveRecord)
                 break
             else:
@@ -71,4 +71,4 @@ for date in dateFile.read().splitlines():
 
 
 dateFile.close()
-#file.close()
+file.close()
