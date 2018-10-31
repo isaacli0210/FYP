@@ -1,5 +1,4 @@
 race_id, date, race_no, class, distance, rating_upper, rating_lower, condition, course_type, track
-
 2008010901,20080109,1,5,2200M,40,10,GOOD,TURF,A
 2008010902,20080109,2,4,1200M,60,40,GOOD,TURF,A
 2008010903,20080109,3,4,1200M,60,40,GOOD,TURF,A
