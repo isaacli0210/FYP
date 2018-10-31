@@ -3,19 +3,19 @@ from bs4 import BeautifulSoup
 
 #header = "horse_id, country, age, sex, import_type, total_stakes, first, second, third, total_race_no, sire, dam, dam_sire"
 
-#file = open("HorseInfo.csv", "a")
-horseIDFile = open("horseID/HorseID_E.txt", "r")
+file = open("HorseInfo.csv", "a")
+horseIDFile = open("horseID/HorseID_V.txt", "r")
 
 #file.write(header)
 
 user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"
-cookie = "LocalRaceCardSetting=1%7C1%7C0%7C1%7C0%7C0%7C0%7C1%7C1%7C1%7C1%7C0%7C0%7C1%7C1%7C0%7C0%7C0%7C0%7C1%7C1%7C0%7C1%7C1%7C0; AMCVS_06AB2C1653DB07AD0A490D4B%40AdobeOrg=1; AMCV_06AB2C1653DB07AD0A490D4B%40AdobeOrg=-330454231%7CMCIDTS%7C17836%7CMCMID%7C43943549019558521101997079126246629764%7CMCAAMLH-1541572328%7C11%7CMCAAMB-1541572328%7CRKhpRz8krg2tLO6pguXWp5olkAcUniQYPHaMWWgdJ3xzPWQmdj0y%7CMCOPTOUT-1540974728s%7CNONE%7CMCAID%7C2DC531E1052AB1A6-40000301A00288F1%7CMCSYNCSOP%7C411-17792%7CvVersion%7C3.1.2; custProIn=; s_visit=1; s_cc=true; s_sq=%5B%5BB%5D%5D; gpv_p5=http%3A%2F%2Fracing.hkjc.com%2Fracing%2Finformation%2FEnglish%2FHorse%2FOtherHorse.aspx%3FHorseNo%3DA018; HKJCSSOGP=1540970303468; BotMitigationCookie_9518109003995423458=\"170279001540971459f1z9uBVdTAFeoVqliqoPzRZv+Lw=\""
+cookie = "LocalRaceCardSetting=1%7C1%7C0%7C1%7C0%7C0%7C0%7C1%7C1%7C1%7C1%7C0%7C0%7C1%7C1%7C0%7C0%7C0%7C0%7C1%7C1%7C0%7C1%7C1%7C0; s_fid=1AC1B116BD9C53EE-228034BA782B560E; localDragTable=5%2F8%2C8%2F5; language=english; AMCVS_06AB2C1653DB07AD0A490D4B%40AdobeOrg=1; custProIn=; s_cc=true; s_sq=%5B%5BB%5D%5D; AMCV_06AB2C1653DB07AD0A490D4B%40AdobeOrg=-330454231%7CMCIDTS%7C17836%7CMCMID%7C22588011069404082340999913768390403196%7CMCAAMLH-1541605848%7C11%7CMCAAMB-1541605848%7CRKhpRz8krg2tLO6pguXWp5olkAcUniQYPHaMWWgdJ3xzPWQmdj0y%7CMCOPTOUT-1541008248s%7CNONE%7CMCAID%7C2DC32E28052AB5FE-40000301E01929CB%7CMCSYNCSOP%7C411-17792%7CvVersion%7C3.1.2; BotMitigationCookie_9518109003995423458=\"695892001541003047ssew390Dt8Z12Y+XtS7nIu/vHKc=\"; s_visit=1; gpv_p5=http%3A%2F%2Fracing.hkjc.com%2Fracing%2Finformation%2FEnglish%2FHorse%2FHorse.aspx%3FHorseNo%3DV026; HKJCSSOGP=1541003050311"
 headers = {"User-Agent": user_agent, "Cookie": cookie}
 
 for horseID in horseIDFile.read().splitlines():
 
     theURL = "http://racing.hkjc.com/racing/information/English/Horse/Horse.aspx?HorseNo=" + horseID
-    #theURL = "http://racing.hkjc.com/racing/information/English/Horse/Horse.aspx?HorseNo=A018"
+    #theURL = "http://racing.hkjc.com/racing/information/English/Horse/Horse.aspx?HorseNo=CC228"
     request = urllib.request.Request(theURL, headers=headers)
 
     while(True):
@@ -74,10 +74,10 @@ for horseID in horseIDFile.read().splitlines():
             third = raceResults[2]
             totalRace = raceResults[-1]
 
-            print(totalStakes)
+            #print(totalStakes)
 
-            #saveRecord = saveRecord + "\n" + horseID + ", " + country + ", " + age + ", " + sex + ", " + importType + ", " + totalStake + ", " + first + ", " + second + ", " + third + ", " + totalRace + ", " + sire + ", " + dam + ", " + dam_sire
-            #file.write(saveRecord)
+            saveRecord = saveRecord + "\n" + horseID + ", " + country + ", " + age + ", " + sex + ", " + importType + ", " + str(totalStakes) + ", " + first + ", " + second + ", " + third + ", " + totalRace + ", " + sire + ", " + dam + ", " + dam_sire
+            file.write(saveRecord)
             print(saveRecord)
             break
 
@@ -86,4 +86,4 @@ for horseID in horseIDFile.read().splitlines():
             break
 
 horseIDFile.close()
-#file.close()
+file.close()
