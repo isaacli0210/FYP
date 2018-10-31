@@ -1,13 +1,14 @@
 import csv
 
-with open('RaceResultST_old.csv', 'r') as csvinput:
-    with open('RaceResultST.csv', 'w') as csvoutput:
+with open('../RaceResultHV_old.csv', 'r') as csvinput:
+    with open('../RaceResultHV.csv', 'w') as csvoutput:
         writer = csv.writer(csvoutput, lineterminator="\n")
         reader = csv.reader(csvinput)
 
         all = []
         row = next(reader)
-        row.append("race_id")
+        #row.append("race_id")
+        row = next(reader)
         all.append(row)
 
         for row in reader:
